@@ -1,0 +1,13 @@
+tests:
+  - healthStatus:
+      status: Progressing
+      message: 'Waiting for Keycloak to start'
+    inputPath: testdata/progressing_keycloak.yaml
+  - healthStatus:
+      status: Degraded
+      message: "Secret 'postgres-app' not found"
+    inputPath: testdata/degraded_keycloak.yaml
+  - healthStatus:
+      status: Healthy
+      message: 'Keycloak started'
+    inputPath: testdata/healthy_keycloak.yaml

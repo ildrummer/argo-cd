@@ -1,0 +1,39 @@
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: KeycloakRealmImport
+metadata:
+  annotations:
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    argocd.argoproj.io/sync-wave: "2"
+  creationTimestamp: "2023-11-21T22:43:14Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/instance: keycloak
+    app.kubernetes.io/name: keycloak
+    argocd.argoproj.io/instance: keycloak-local
+  name: keycloak-realm-0-shared-services
+  namespace: keycloak
+  resourceVersion: "7852"
+  uid: d7839f5b-316d-46da-a6be-0579c1359810
+spec:
+  keycloakCRName: keycloak
+  realm:
+    adminEventsDetailsEnabled: true
+    adminEventsEnabled: true
+    displayName: Shared Services
+    enabled: true
+    eventsEnabled: true
+    eventsExpiration: 864000
+    realm: shared-services
+    sslRequired: none
+    userManagedAccessAllowed: false
+status:
+  conditions:
+  - message: ""
+    status: true
+    type: Done
+  - message: ""
+    status: false
+    type: Started
+  - message: ""
+    status: false
+    type: HasErrors

@@ -1,0 +1,13 @@
+tests:
+  - healthStatus:
+      status: Progressing
+      message: 'Keycloak Realm installing'
+    inputPath: testdata/progressing_keycloakrealmimport.yaml
+  - healthStatus:
+      status: Degraded
+      message: "failed to install realm"
+    inputPath: testdata/degraded_keycloakrealmimport.yaml
+  - healthStatus:
+      status: Healthy
+      message: 'Keycloak Realm installed'
+    inputPath: testdata/healthy_keycloakrealmimport.yaml

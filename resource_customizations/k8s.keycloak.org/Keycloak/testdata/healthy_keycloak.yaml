@@ -1,0 +1,80 @@
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  creationTimestamp: "2023-11-21T21:24:31Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/instance: keycloak
+    app.kubernetes.io/name: keycloak
+    argocd.argoproj.io/instance: keycloak-local
+  name: keycloak
+  namespace: keycloak
+  resourceVersion: "2096"
+  uid: 6f3be6be-2934-40e8-9b17-c3ff316e81fe
+spec:
+  additionalOptions:
+  - name: metrics-enabled
+    value: "true"
+  - name: proxy
+    value: edge
+  - name: cache
+    value: local
+  db:
+    database: keycloak
+    host: keycloak-postgres-rw.keycloak.svc.cluster.local
+    passwordSecret:
+      key: password
+      name: keycloak-postgres-app
+      optional: false
+    port: 5432
+    usernameSecret:
+      key: username
+      name: keycloak-postgres-app
+      optional: false
+    vendor: postgres
+  hostname:
+    strict: false
+    strictBackchannel: false
+  http:
+    httpEnabled: true
+    httpPort: 8080
+  ingress:
+    enabled: false
+  instances: 1
+  transaction:
+    xaEnabled: true
+  unsupported:
+    podTemplate:
+      spec:
+        containers:
+        - name: keycloak
+          resources:
+            limits:
+              memory: 500Mi
+            requests:
+              cpu: 500m
+              memory: 500Mi
+        initContainers:
+        - args:
+          - -h
+          - keycloak-postgres-rw.keycloak.svc.cluster.local
+          - -p
+          - "5432"
+          - -t
+          - "120"
+          image: cgr.dev/chainguard/wait-for-it:latest@sha256:476efb394765e1d80a4299554c8b04e11bef9b6c87d23961d140db04917779a1
+          imagePullPolicy: IfNotPresent
+          name: wait-for-db
+status:
+  conditions:
+  - message: ""
+    status: true
+    type: Ready
+  - message: ""
+    status: false
+    type: HasErrors
+  - message: ""
+    status: false
+    type: RollingUpdate
